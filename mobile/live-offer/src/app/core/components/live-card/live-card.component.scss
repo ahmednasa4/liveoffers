@@ -1,0 +1,71 @@
+.live-card {
+  margin: 0;
+  width: 100%;
+}
+
+.thumb {
+  position: relative;
+  background: var(--ion-color-dark);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  --object-fit: contain;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    font-size: 2.5rem;
+  }
+}
+
+.live-badge {
+  position: absolute;
+  top: 8px;
+  inset-inline-start: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+
+  ion-icon {
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+}
+
+.store-icon {
+  color: var(--ion-color-primary);
+  font-size: 1.1rem;
+}
+
+.store-name {
+  font-weight: 600;
+  --color: var(--ion-text-color);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}

@@ -1,0 +1,23 @@
+<ion-card button="true" (click)="open()" class="live-card">
+  <div class="thumb">
+    <ion-img
+      *ngIf="stream.preview_image; else thumbPlaceholder"
+      [src]="stream.preview_image | imageUrl"
+      alt="stream.store?.name"
+      class="thumb-img"
+    ></ion-img>
+    <ng-template #thumbPlaceholder>
+      <div class="placeholder"><ion-icon name="radio"></ion-icon></div>
+    </ng-template>
+
+    <ion-badge color="danger" class="live-badge">
+      <ion-icon name="radio"></ion-icon>
+      مباشر
+    </ion-badge>
+  </div>
+
+  <div class="meta">
+    <ion-icon name="storefront" class="store-icon"></ion-icon>
+    <ion-label class="store-name">{{ stream.store?.name || 'متجر' }}</ion-label>
+  </div>
+</ion-card>

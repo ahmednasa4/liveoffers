@@ -1,0 +1,130 @@
+.loading-wrap {
+  padding: 14px;
+}
+
+.skel-hero {
+  height: 240px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.skel-line {
+  height: 18px;
+  width: 60%;
+  margin: 8px 0;
+}
+
+.live {
+  padding-bottom: 24px;
+}
+
+.stage {
+  position: relative;
+  background: var(--ion-color-dark);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.remote-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+
+  &.is-active {
+    display: block;
+  }
+
+  // Agora injects a <div><video/></div> at runtime (outside Angular's
+  // emulated encapsulation), so reach in with ::ng-deep.
+  ::ng-deep video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    background: #000;
+  }
+}
+
+.stage-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  --object-fit: contain;
+}
+
+.stage-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--ion-color-medium);
+
+  ion-icon {
+    font-size: 4rem;
+  }
+}
+
+.live-badge {
+  position: absolute;
+  top: 12px;
+  inset-inline-start: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+
+  ion-icon {
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+}
+
+.viewers {
+  position: absolute;
+  bottom: 12px;
+  inset-inline-start: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+
+.body {
+  padding: 16px;
+}
+
+.title {
+  margin: 0 0 16px;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.join-btn {
+  margin-bottom: 16px;
+}
+
+.contact-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.empty {
+  text-align: center;
+  color: var(--ion-color-medium);
+  padding: 48px 14px;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}

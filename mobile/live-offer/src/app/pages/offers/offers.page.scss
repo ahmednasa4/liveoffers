@@ -1,0 +1,48 @@
+.offers-search {
+  --box-shadow: none;
+  padding: 8px 12px 4px;
+}
+
+.chip-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 10px 12px;
+
+  ion-chip {
+    flex: 0 0 auto;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 0 10px 16px;
+}
+
+.grid-item {
+  display: flex;
+}
+
+.empty {
+  text-align: center;
+  color: var(--ion-color-medium);
+  padding: 48px 14px;
+}
+
+.skel-img {
+  height: 120px;
+  width: 100%;
+  margin: 0 0 8px;
+}
+
+.skel-line {
+  height: 14px;
+  width: 100%;
+  margin: 4px 0;
+
+  &.short {
+    width: 60%;
+  }
+}

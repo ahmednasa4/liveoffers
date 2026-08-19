@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>المتجر</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-wrap">
+    <ion-skeleton-text [animated]="true" class="skel-logo"></ion-skeleton-text>
+    <ion-skeleton-text [animated]="true" class="skel-line"></ion-skeleton-text>
+    <ion-skeleton-text [animated]="true" class="skel-line short"></ion-skeleton-text>
+  </div>
+
+  <div *ngIf="!loading && store" class="store">
+    <!-- Header -->
+    <div class="store-head">
+      <ion-img
+        *ngIf="store.logo; else logoPlaceholder"
+        [src]="store.logo | imageUrl"
+        alt="store.name"
+        class="store-logo"
+      ></ion-img>
+      <ng-template #logoPlaceholder>
+        <div class="store-logo placeholder"><ion-icon name="storefront"></ion-icon></div>
+      </ng-template>
+
+      <div class="store-info">
+        <h1 class="store-name">{{ store.name }}</h1>
+        <div class="store-address" *ngIf="store.address">
+          <ion-icon name="location" color="medium"></ion-icon>
+          <span>{{ store.address }}</span>
+        </div>
+      </div>
+    </div>
+
+    <p class="description" *ngIf="store.description">{{ store.description }}</p>
+
+    <div class="actions">
+      <ion-button expand="block" fill="outline" (click)="callStore()" *ngIf="store.phone">
+        <ion-icon name="call" slot="start"></ion-icon>
+        اتصل
+      </ion-button>
+      <ion-button expand="block" color="success" (click)="whatsappStore()" *ngIf="store.whatsapp_number">
+        <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+        واتساب
+      </ion-button>
+    </div>
+
+    <!-- Offers -->
+    <h2 class="offers-title">عروض المتجر ({{ store.offers?.length || 0 }})</h2>
+    <div class="grid" *ngIf="store.offers?.length">
+      <div class="grid-item" *ngFor="let o of store.offers">
+        <app-offer-card [offer]="o"></app-offer-card>
+      </div>
+    </div>
+    <div class="empty" *ngIf="!store.offers?.length">لا توجد عروض لهذا المتجر</div>
+  </div>
+
+  <div class="empty" *ngIf="!loading && !store">المتجر غير موجود</div>
+</ion-content>

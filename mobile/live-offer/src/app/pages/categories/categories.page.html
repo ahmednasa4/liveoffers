@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>الأقسام</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Loading -->
+  <div class="list" *ngIf="loading">
+    <ion-skeleton-text [animated]="true" class="skel-card" *ngFor="let _ of [1, 2, 3, 4]"></ion-skeleton-text>
+  </div>
+
+  <!-- Categories -->
+  <div class="list" *ngIf="!loading">
+    <ion-card button="true" *ngFor="let c of categories" (click)="openCategory(c)" class="cat-card">
+      <ion-card-header>
+        <ion-card-title class="cat-title">
+          <ion-icon name="grid" color="primary"></ion-icon>
+          {{ c.name }}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content *ngIf="c.subcategories?.length">
+        <div class="subs">
+          <ion-chip
+            *ngFor="let s of c.subcategories"
+            (click)="openSubcategory(c, s.id, s.name); $event.stopPropagation()"
+          >
+            <ion-label>{{ s.name }}</ion-label>
+          </ion-chip>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="empty" *ngIf="!loading && !categories.length">
+    لا توجد أقسام
+  </div>
+</ion-content>

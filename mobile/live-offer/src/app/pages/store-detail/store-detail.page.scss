@@ -1,0 +1,106 @@
+.loading-wrap {
+  padding: 16px;
+}
+
+.skel-logo {
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  margin-bottom: 12px;
+}
+
+.skel-line {
+  height: 18px;
+  width: 100%;
+  margin: 8px 0;
+
+  &.short {
+    width: 50%;
+  }
+}
+
+.store {
+  padding-bottom: 24px;
+}
+
+.store-head {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 18px 16px;
+}
+
+.store-logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: contain;
+  --object-fit: contain;
+  background: var(--ion-color-light);
+  flex: 0 0 auto;
+
+  &.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ion-color-medium);
+
+    ion-icon {
+      font-size: 2rem;
+    }
+  }
+}
+
+.store-info {
+  flex: 1;
+}
+
+.store-name {
+  margin: 0 0 4px;
+  font-size: 1.3rem;
+  font-weight: 800;
+}
+
+.store-address {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ion-color-medium);
+  font-size: 0.85rem;
+}
+
+.description {
+  margin: 0 16px 16px;
+  line-height: 1.7;
+  color: var(--ion-text-color);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 16px 20px;
+}
+
+.offers-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0 16px 8px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.grid-item {
+  display: flex;
+}
+
+.empty {
+  text-align: center;
+  color: var(--ion-color-medium);
+  padding: 32px 14px;
+}

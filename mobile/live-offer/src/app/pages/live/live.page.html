@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>المباشر</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="grid" *ngIf="loading">
+    <div class="grid-item" *ngFor="let _ of [1, 2, 3, 4]">
+      <ion-skeleton-text [animated]="true" class="skel-img"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true" class="skel-line"></ion-skeleton-text>
+    </div>
+  </div>
+
+  <div class="grid" *ngIf="!loading && streams.length">
+    <div class="grid-item" *ngFor="let s of streams">
+      <app-live-card [stream]="s"></app-live-card>
+    </div>
+  </div>
+
+  <div class="empty" *ngIf="!loading && !streams.length">
+    لا توجد بثوث مباشرة الآن
+  </div>
+</ion-content>

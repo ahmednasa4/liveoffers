@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>المتاجر</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Search -->
+  <ion-searchbar
+    class="stores-search"
+    [value]="searchTerm"
+    placeholder="ابحث عن متجر..."
+    [debounce]="350"
+    (ionInput)="onSearch($event)"
+  ></ion-searchbar>
+
+  <!-- Loading skeletons -->
+  <div class="grid" *ngIf="loading">
+    <div class="store-card skel" *ngFor="let _ of [1, 2, 3, 4]">
+      <ion-skeleton-text [animated]="true" class="skel-logo"></ion-skeleton-text>
+      <div class="store-info">
+        <ion-skeleton-text [animated]="true" class="skel-line"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" class="skel-line short"></ion-skeleton-text>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stores grid -->
+  <div class="grid" *ngIf="!loading && stores.length">
+    <div class="store-card" *ngFor="let s of stores" (click)="openStore(s)">
+      <ion-img
+        *ngIf="s.logo; else logoPlaceholder"
+        [src]="s.logo | imageUrl"
+        [alt]="s.name"
+        class="store-logo"
+      ></ion-img>
+      <ng-template #logoPlaceholder>
+        <div class="store-logo placeholder"><ion-icon name="storefront"></ion-icon></div>
+      </ng-template>
+
+      <div class="store-info">
+        <h2 class="store-name">{{ s.name }}</h2>
+        <div class="store-address" *ngIf="s.address">
+          <ion-icon name="location" color="medium"></ion-icon>
+          <span>{{ s.address }}</span>
+        </div>
+      </div>
+
+      <ion-chip class="offers-badge" color="primary">
+        <ion-icon name="pricetags"></ion-icon>
+        <ion-label>{{ storeOffersCount(s) }} عرض</ion-label>
+      </ion-chip>
+    </div>
+  </div>
+
+  <div class="empty" *ngIf="!loading && !stores.length">
+    لا توجد متاجر بها عروض حالياً
+  </div>
+</ion-content>

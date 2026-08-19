@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/live"></ion-back-button>
+    </ion-buttons>
+    <ion-title>البث المباشر</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-wrap">
+    <ion-skeleton-text [animated]="true" class="skel-hero"></ion-skeleton-text>
+    <ion-skeleton-text [animated]="true" class="skel-line"></ion-skeleton-text>
+  </div>
+
+  <div *ngIf="!loading && stream" class="live">
+    <!-- Video area -->
+    <div class="stage">
+      <!-- Agora remote video (viewer) -->
+      <div class="remote-video" #remoteVideo [class.is-active]="joined"></div>
+
+      <!-- Preview image shown until joined -->
+      <ion-img
+        *ngIf="stream.preview_image && !joined"
+        [src]="stream.preview_image | imageUrl"
+        alt="stream.store?.name"
+        class="stage-img"
+      ></ion-img>
+      <ng-template #stagePlaceholder>
+        <div *ngIf="!joined" class="stage-placeholder"><ion-icon name="radio"></ion-icon></div>
+      </ng-template>
+
+      <ion-badge color="danger" class="live-badge">
+        <ion-icon name="radio"></ion-icon>
+        مباشر
+      </ion-badge>
+
+      <div class="viewers">
+        <ion-icon name="people"></ion-icon>
+        <span>{{ stream.max_viewers }} مشاهد</span>
+      </div>
+    </div>
+
+    <div class="body">
+      <h1 class="title">{{ stream.store?.name || 'بث مباشر' }}</h1>
+
+      <ion-button
+        expand="block"
+        size="large"
+        [color]="joined ? 'medium' : 'danger'"
+        [disabled]="joining"
+        (click)="join()"
+        class="join-btn"
+      >
+        <ion-icon name="radio" slot="start"></ion-icon>
+        {{ joining ? 'جاري الانضمام...' : (joined ? 'مغادرة البث' : 'انضم للبث') }}
+      </ion-button>
+
+      <div class="contact-row" *ngIf="stream.store">
+        <ion-button fill="outline" (click)="callStore()" *ngIf="stream.store.phone">
+          <ion-icon name="call" slot="start"></ion-icon>
+          اتصل بالمتجر
+        </ion-button>
+        <ion-button color="success" (click)="whatsappStore()" *ngIf="stream.store.whatsapp_number">
+          <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+          واتساب
+        </ion-button>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty" *ngIf="!loading && !stream">البث غير متوفر</div>
+</ion-content>

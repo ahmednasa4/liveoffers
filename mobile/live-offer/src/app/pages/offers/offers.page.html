@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Search -->
+  <ion-searchbar
+    class="offers-search"
+    [value]="searchTerm"
+    placeholder="ابحث عن عرض..."
+    [debounce]="350"
+    (ionInput)="onSearch($event)"
+  ></ion-searchbar>
+
+  <!-- Category filter chips -->
+  <div class="chip-row" *ngIf="categories.length">
+    <ion-chip
+      (click)="clearFilter()"
+      [color]="!activeCategoryId ? 'primary' : 'medium'"
+      outline="!activeCategoryId"
+    >
+      <ion-label>الكل</ion-label>
+    </ion-chip>
+    <ion-chip
+      *ngFor="let c of categories"
+      (click)="filterByCategory(c)"
+      [color]="activeCategoryId === c.id ? 'primary' : 'medium'"
+      outline="activeCategoryId !== c.id"
+    >
+      <ion-label>{{ c.name }}</ion-label>
+    </ion-chip>
+  </div>
+
+  <!-- Loading skeletons -->
+  <div class="grid" *ngIf="loading">
+    <div class="grid-item" *ngFor="let _ of [1, 2, 3, 4]">
+      <ion-skeleton-text [animated]="true" class="skel-img"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true" class="skel-line"></ion-skeleton-text>
+      <ion-skeleton-text [animated]="true" class="skel-line short"></ion-skeleton-text>
+    </div>
+  </div>
+
+  <!-- Offers grid -->
+  <div class="grid" *ngIf="!loading && offers.length">
+    <div class="grid-item" *ngFor="let o of offers">
+      <app-offer-card [offer]="o"></app-offer-card>
+    </div>
+  </div>
+
+  <div class="empty" *ngIf="!loading && !offers.length">
+    لا توجد عروض حالياً
+  </div>
+
+  <ion-infinite-scroll *ngIf="!loading && page < lastPage" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingText="جارٍ التحميل..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

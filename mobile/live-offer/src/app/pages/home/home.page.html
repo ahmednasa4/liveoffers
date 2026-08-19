@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>العروض المحلية</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Live now strip -->
+  <section class="block" *ngIf="!loading && lives.length">
+    <div class="block-head">
+      <ion-icon name="videocam" color="danger"></ion-icon>
+      <h2>مباشر الآن</h2>
+    </div>
+    <div class="hscroll">
+      <div class="hscroll-item" *ngFor="let s of lives">
+        <app-live-card [stream]="s"></app-live-card>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories chips -->
+  <section class="block" *ngIf="!loading && categories.length">
+    <div class="block-head">
+      <ion-icon name="grid" color="primary"></ion-icon>
+      <h2>الأقسام</h2>
+    </div>
+    <div class="hscroll chips">
+      <ion-chip *ngFor="let c of categories" (click)="openCategory(c)" button="true">
+        <ion-icon *ngIf="c.icon" [name]="c.icon"></ion-icon>
+        <ion-label>{{ c.name }}</ion-label>
+      </ion-chip>
+    </div>
+  </section>
+
+  <!-- Featured offers -->
+  <section class="block">
+    <div class="block-head">
+      <ion-icon name="star" color="warning"></ion-icon>
+      <h2>عروض مميزة</h2>
+      <ion-label class="see-all" (click)="seeAllOffers()" *ngIf="!loading && featured.length">
+        عرض الكل
+      </ion-label>
+    </div>
+
+    <!-- Loading skeletons -->
+    <div class="grid" *ngIf="loading">
+      <div class="grid-item" *ngFor="let _ of [1, 2, 3, 4]">
+        <ion-skeleton-text [animated]="true" class="skel-img"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" class="skel-line"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" class="skel-line short"></ion-skeleton-text>
+      </div>
+    </div>
+
+    <!-- Offers grid -->
+    <div class="grid" *ngIf="!loading && featured.length">
+      <div class="grid-item" *ngFor="let o of featured">
+        <app-offer-card [offer]="o"></app-offer-card>
+      </div>
+    </div>
+
+    <div class="empty" *ngIf="!loading && !featured.length">
+      لا توجد عروض مميزة حالياً
+    </div>
+  </section>
+</ion-content>

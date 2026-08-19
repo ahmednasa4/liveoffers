@@ -1,0 +1,94 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>تفاصيل العرض</ion-title>
+    <ion-buttons slot="end" *ngIf="offer">
+      <ion-button (click)="shareOffer()"><ion-icon name="share" slot="icon-only"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Loading -->
+  <div *ngIf="loading" class="loading-wrap">
+    <ion-skeleton-text [animated]="true" class="skel-hero"></ion-skeleton-text>
+    <ion-skeleton-text [animated]="true" class="skel-line"></ion-skeleton-text>
+    <ion-skeleton-text [animated]="true" class="skel-line short"></ion-skeleton-text>
+    <ion-skeleton-text [animated]="true" class="skel-line"></ion-skeleton-text>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!loading && offer" class="detail">
+    <div class="hero">
+      <ion-img
+        *ngIf="offer.image; else heroPlaceholder"
+        [src]="offer.image | imageUrl"
+        [alt]="offer.title"
+        class="hero-img"
+      ></ion-img>
+      <ng-template #heroPlaceholder>
+        <div class="hero-placeholder"><ion-icon name="pricetag"></ion-icon></div>
+      </ng-template>
+
+      <ion-badge color="danger" class="discount-badge">
+        خصم {{ offer.original_price | discount: offer.offer_price }}
+      </ion-badge>
+    </div>
+
+    <div class="body">
+      <h1 class="title">{{ offer.title }}</h1>
+
+      <div class="prices">
+        <span class="price-offer">{{ offer.offer_price }} د.أ</span>
+        <span class="price-original" *ngIf="offer.original_price !== offer.offer_price">
+          {{ offer.original_price }} د.أ
+        </span>
+      </div>
+
+      <div class="countdown-row" *ngIf="offer.end_date">
+        <app-countdown [end]="offer.end_date"></app-countdown>
+      </div>
+
+      <div class="meta-row" *ngIf="offer.category">
+        <ion-icon name="pricetag" color="primary"></ion-icon>
+        <span>{{ offer.category.name }}</span>
+        <span class="dot" *ngIf="offer.subcategory">• {{ offer.subcategory.name }}</span>
+        <span class="dot">• <ion-icon name="eye"></ion-icon> {{ offer.view_count }}</span>
+      </div>
+
+      <h2 class="section-title">الوصف</h2>
+      <p class="description">{{ offer.description }}</p>
+
+      <!-- Store card -->
+      <ion-card class="store-card" *ngIf="offer.store">
+        <ion-card-header>
+          <ion-card-title class="store-title">
+            <ion-icon name="storefront" color="primary"></ion-icon>
+            {{ offer.store.name }}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="store-meta" *ngIf="offer.store.address">
+            <ion-icon name="location" color="medium"></ion-icon>
+            <span>{{ offer.store.address }}</span>
+          </div>
+
+          <div class="store-actions">
+            <ion-button expand="block" fill="outline" (click)="callStore()" *ngIf="offer.store.phone">
+              <ion-icon name="call" slot="start"></ion-icon>
+              اتصل
+            </ion-button>
+            <ion-button expand="block" color="success" (click)="whatsappStore()" *ngIf="offer.store.whatsapp_number">
+              <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+              واتساب
+            </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <div class="empty" *ngIf="!loading && !offer">العرض غير موجود</div>
+</ion-content>
